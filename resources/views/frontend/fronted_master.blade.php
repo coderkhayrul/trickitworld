@@ -59,12 +59,6 @@
 
   </head>
   <body>
-    <?php
-    define('_MN_USER', '6242d1f9f47328fd657122bbe7ad14cf93d080b0');
-    require_once($_SERVER['DOCUMENT_ROOT'].'/'._MN_USER.'/magenet.php');
-    $magenet = new Magenet();
-    echo $magenet->getLinks();
-    ?>
     <!-- Main Wrapper -->
     <div
       id="main-wrapper">
