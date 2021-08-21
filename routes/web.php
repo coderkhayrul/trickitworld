@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\CommentController;
 use App\Http\Controllers\Backend\CustromAdsController;
 use App\Http\Controllers\Backend\GiveawayController;
 use App\Http\Controllers\Backend\PageSettingController;
@@ -43,8 +44,11 @@ Route::get('/terms', [FrontendController::class, 'homeTerms'])->name('home.terms
 Route::get('/post/{slug}',  [FrontendController::class, 'homeProductShow'])->name('home.product.show');
 Route::get('/category/{slug}',  [FrontendController::class, 'categoryPostShow'])->name('home.category.post.show');
 
-// Sent Message System Route
+// Contact Sent Message System Route
 Route::post('/sent',  [FrontendController::class, 'sentMessage'])->name('sent.message');
+
+// Contact Sent Message System Route
+Route::post('/comment/sent',  [FrontendController::class, 'sentContact'])->name('sent.contact');
 
 // |========================================================================================|
 // *--------------------------------- FRONTEND ROUTE LIST END ----------------------------*
@@ -103,6 +107,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
     Route::get('/contact', [AdminController::class, 'getAllContact'])->name('all.contact');
     Route::get('/contact/destroy/{id}', [AdminController::class, 'destroyContact'])->name('contact.destroy');
     Route::get('/contact/show/{id}', [AdminController::class, 'showContact'])->name('contact.show');
+
+    Route::resource('/comment', CommentController::class);
 });
 
 // |========================================================================================|

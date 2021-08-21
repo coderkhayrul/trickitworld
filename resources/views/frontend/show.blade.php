@@ -33,6 +33,7 @@
                                 Khayrul Islam Shanto
                             </a>
                             <span class="meta-item date"><i class="fa fa-clock-o"></i>{{ Carbon\Carbon::parse($post->created_at)->diffForHumans() }}</span>
+                            <a href="#" class="meta-item comments"><i class="fa fa-comments"></i>({{ count($post->comment) }})</a>
                         </div>
 
                     </div>
@@ -135,44 +136,100 @@
                         <div class="body">
 
                             <div class="two-column-post-carousel column-post-carousel post-block-carousel row">
-                                @foreach ($allposts as $post)
-                                <div class="col-md-6 col-12">
+                                @foreach ($allposts as $sliderpost)
+                                    <div class="col-md-6 col-12">
 
-                                    <!-- Overlay Post Start -->
-                                    <div class="post post-overlay hero-post">
-                                        <div class="post-wrap">
+                                        <!-- Overlay Post Start -->
+                                        <div class="post post-overlay hero-post">
+                                            <div class="post-wrap">
 
-                                            <!-- Image -->
-                                            <div class="image"><img src="{{ asset($post->thambnail_image) }}" alt="post"></div>
+                                                <!-- Image -->
+                                                <div class="image"><img src="{{ asset($sliderpost->thambnail_image) }}" alt="post"></div>
 
-                                            <!-- Category -->
-                                            <a href="#" class="category politic">@if(session()->get('language') == 'bangla') {{$post->category->name_ban }} @else {{ $post->category->name_en }}@endif</a>
+                                                <!-- Category -->
+                                                <a href="#" class="category politic">@if(session()->get('language') == 'bangla') {{$sliderpost->category->name_ban }} @else {{ $sliderpost->category->name_en }}@endif</a>
 
-                                            <!-- Content -->
-                                            <div class="content">
+                                                <!-- Content -->
+                                                <div class="content">
 
-                                                <!-- Title -->
-                                                <h4 class="title"><a href="@if(session()->get('language') == 'bangla') {{ route('home.product.show',$post->slug_en) }} @else {{ route('home.product.show',$post->slug_en) }} @endif ">@if(session()->get('language') == 'bangla') {{ Str::limit($post->name_ban, 40, $end='.') }} @else {{ Str::limit($post->name_en, 40, $end='.') }}@endif</a></h4>
+                                                    <!-- Title -->
+                                                    <h4 class="title"><a href="@if(session()->get('language') == 'bangla') {{ route('home.product.show',$sliderpost->slug_en) }} @else {{ route('home.product.show',$sliderpost->slug_en) }} @endif ">@if(session()->get('language') == 'bangla') {{ Str::limit($sliderpost->name_ban, 40, $end='.') }} @else {{ Str::limit($sliderpost->name_en, 40, $end='.') }}@endif</a></h4>
 
-                                                <!-- Meta -->
-                                                <div class="meta fix">
-                                                    <span class="meta-item date"><i class="fa fa-clock-o"></i>{{ Carbon\Carbon::parse($post->created_at)->diffForHumans() }}</span>
+                                                    <!-- Meta -->
+                                                    <div class="meta fix">
+                                                        <span class="meta-item date"><i class="fa fa-clock-o"></i>{{ Carbon\Carbon::parse($sliderpost->created_at)->diffForHumans() }}</span>
+                                                    </div>
+
                                                 </div>
 
                                             </div>
-
-                                        </div>
-                                    </div><!-- Overlay Post End -->
-
-                                </div>
+                                        </div><!-- Overlay Post End -->
+                                    </div>
                                 @endforeach
-
                             </div>
 
                         </div><!-- Post Block Body End -->
 
                     </div><!-- Post Block Wrapper End -->
+                    <!-- Leave a Comment Start -->
+                    <!-- Post Block Wrapper Start -->
+                    <div class="post-block-wrapper">
+                        <!-- Post Block Head Start -->
+                        <div class="head">
+                            <!-- Title -->
+                            <h4 class="title">Leave a Comment</h4>
+                        </div><!-- Post Block Head End -->
+                        <!-- Post Block Body Start -->
+                        <div class="body">
+                            @if (Session::has('message'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                {{ Session::get('message') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            @endif
+                            <div class="post-comment-form">
+                                <form action="{{ route('sent.contact') }}" class="row" method="post">
+                                    @csrf
+                                    <input type="hidden" name="post_id" value="{{ $post->id }}">
+                                    <div class="col-md-6 col-12 mb-20">
+                                        <label for="name">Name <sup>*</sup></label>
+                                        <input value="{{old('name')}}" class="@error('name') is-invalid @enderror"name="name" type="text" id="name">
+                                        @error('name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-6 col-12 mb-20">
+                                        <label for="email">Email <sup>*</sup></label>
+                                        <input value="{{old('email')}}" class="@error('email') is-invalid @enderror" name="email" type="text" id="email">
+                                        @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-12 mb-20">
+                                        <label for="message">Message <sup>*</sup></label>
+                                        <textarea class="@error('message') is-invalid @enderror" name="message" id="message"></textarea>
+                                        @error('message')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
 
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-primary">Submit Comment</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div><!-- Post Block Body End -->
+                    </div>
+                    <!-- Post Block Wrapper End -->
+                    <!-- Leave a Comment Start -->
                 </div>
 
                 <!-- Sidebar Start -->

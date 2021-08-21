@@ -52,8 +52,10 @@ Admin Panel || Products
                             @endif
                         </td>
                         <td class="d-flex justify-content-center">
+                            <a href="{{ route('comment.show',$product->id) }}" class="btn btn-success btn-sm mr-2"><i
+                                class="fas fa-comments"></i></a>
                             <a href="{{ route('product.show',$product->id) }}" class="btn btn-success btn-sm mr-2"><i
-                                    class="fas fa-eye"></i></a>
+                                class="fas fa-eye"></i></a>
                             <a href="{{ route('product.edit',$product->id) }}" class="btn btn-info btn-sm mr-2"><i
                                     class="fas fa-edit"></i></a>
 

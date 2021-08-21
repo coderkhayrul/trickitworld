@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Contact;
 use App\Models\Giveaway;
 use App\Models\Product;
@@ -117,6 +118,37 @@ class FrontendController extends Controller
         $contact->save();
 
         Session::flash('message', 'Thanks for contacting us, we will get back to you as soon as possible.');
+
+        return redirect()->back();
+    }
+
+    public function sentContact(Request $request)
+    {
+        // dd($request->all());
+        $this->validate(
+            $request,
+            [
+                'name' => 'required|max:50|min:4',
+                'email' => 'required|email|max:50|min:8',
+                'message' => 'required|min:2',
+            ],
+            [
+                'name.required' => 'A name is required',
+                'email.required' => 'A valide email is required',
+                'message.required' => 'A valide message is required'
+            ]
+        );
+
+        $comment = new Comment();
+        $comment->post_id = $request->post_id;
+        $comment->name = $request->name;
+        $comment->name = $request->name;
+        $comment->email = $request->email;
+        $comment->message = $request->message;
+        $comment->status = 0;
+        $comment->save();
+
+        Session::flash('message', 'Comment Submitted Successfully');
 
         return redirect()->back();
     }
