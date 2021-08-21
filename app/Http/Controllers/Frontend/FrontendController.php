@@ -140,7 +140,7 @@ class FrontendController extends Controller
         );
 
         $comment = new Comment();
-        $comment->post_id = $request->post_id;
+        $comment->product_id = $request->post_id;
         $comment->name = $request->name;
         $comment->name = $request->name;
         $comment->email = $request->email;
