@@ -33,7 +33,9 @@
                                 Khayrul Islam Shanto
                             </a>
                             <span class="meta-item date"><i class="fa fa-clock-o"></i>{{ Carbon\Carbon::parse($post->created_at)->diffForHumans() }}</span>
+                            @if (!count($post->comment) == 0)
                             <a href="#" class="meta-item comments"><i class="fa fa-comments"></i>({{ count($post->comment) }})</a>
+                            @endif
                         </div>
 
                     </div>
