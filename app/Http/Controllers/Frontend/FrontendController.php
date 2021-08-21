@@ -142,7 +142,6 @@ class FrontendController extends Controller
         $comment = new Comment();
         $comment->product_id = $request->post_id;
         $comment->name = $request->name;
-        $comment->name = $request->name;
         $comment->email = $request->email;
         $comment->message = $request->message;
         $comment->status = 0;

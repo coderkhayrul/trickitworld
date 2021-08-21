@@ -49,7 +49,7 @@ class CommentController extends Controller
      */
     public function show($id)
     {
-        $comments = Comment::where('post_id', $id)->get();
+        $comments = Comment::where('product_id', $id)->get();
         return view('admin.comment.index', compact('comments'));
     }
 
